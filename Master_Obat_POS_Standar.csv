@@ -1,0 +1,11 @@
+Kode Obat,Barcode/SKU,Nama Obat,Kategori,Satuan,Harga Beli (Rp),Harga Jual (Rp),Stok Minimum,Lokasi Rak,Keterangan Tambahan
+OBT-001,8991234567890,Paracetamol 500mg,Obat Bebas,Strip,3000,5000,50,Rak A1,Untuk demam dan sakit kepala
+OBT-002,8999876543210,Amoxicillin 500mg,Obat Keras,Strip,8000,12000,20,Lemari Kaca 1,Antibiotik (Resep Dokter)
+OBT-003,8991112223334,Betadine Antiseptic 15ml,Alat Kesehatan,Botol,15000,18500,10,Etalase Depan,Obat luka luar
+OBT-004,8994445556667,Vitamin C 1000mg,Vitamin & Suplemen,Botol,35000,45000,15,Rak B2,Suplemen daya tahan tubuh
+OBT-005,8997778889990,Sirup OBH Combi 100ml,Obat Bebas Terbatas,Botol,12000,16000,30,Rak Obat Batuk,Meredakan batuk berdahak
+OBT-006,8993332221115,Inzana Aspirin Anak,Obat Bebas,Strip,2000,3500,100,Rak A2,Aspirin khusus anak
+OBT-007,8996665554443,Diapet Obat Diare,Obat Herbal,Dus,18000,22500,25,Rak C3,Diare herbal
+OBT-008,8990001112229,Minyak Telon Lang 60ml,Perawatan Bayi,Botol,19000,24000,15,Etalase Bayi,Minyak urut bayi
+OBT-009,8998887776661,Oskadon Obat Pusing,Obat Bebas,Pcs,1500,2500,200,Kasir Depan,-
+OBT-010,8995554443332,Listerine Mouthwash 250ml,Perawatan Tubuh,Botol,21000,26500,12,Rak D1,Obat kumur antiseptik
