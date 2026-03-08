@@ -27,12 +27,13 @@
         </button>
     </div>
     <div class="table-responsive">
-        <table>
+        <table class="datatable">
             <thead>
                 <tr>
                     <th width="5%">No</th>
+                    <th width="15%">Kode Kategori</th>
                     <th width="30%">Nama Kategori</th>
-                    <th width="45%">Keterangan</th>
+                    <th width="30%">Keterangan</th>
                     <th width="20%">Aksi</th>
                 </tr>
             </thead>
@@ -40,12 +41,13 @@
                 @forelse ($kategoris as $index => $k)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td style="font-weight: 600; color: var(--primary-color);">{{ $k->nama_kategori }}</td>
-                    <td style="color: #6b7280;">{{ $k->keterangan ?? '-' }}</td>
+                    <td style="color: #6b7280; font-family: monospace;">{{ $k->category_code }}</td>
+                    <td style="font-weight: 600; color: var(--primary-color);">{{ $k->category_name }}</td>
+                    <td style="color: #6b7280;">{{ $k->description ?? '-' }}</td>
                     <td>
                         <div style="display: flex; gap: 0.5rem;">
                             <button type="button" class="btn btn-edit btn-sm"
-                                onclick="openEditModal({{ $k->id }}, '{{ addslashes($k->nama_kategori) }}', '{{ addslashes($k->keterangan ?? '') }}')">
+                                onclick="openEditModal({{ $k->id }}, '{{ addslashes($k->category_code) }}', '{{ addslashes($k->category_name) }}', '{{ addslashes($k->description ?? '') }}')">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                 Edit
                             </button>
@@ -62,7 +64,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" style="text-align: center; color: #9ca3af; padding: 3rem;">Belum ada data kategori obat.</td>
+                    <td colspan="5" style="text-align: center; color: #9ca3af; padding: 3rem;">Belum ada data kategori obat.</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -81,15 +83,22 @@
         </div>
         <form action="{{ route('kategori-obat.store') }}" method="POST">
             @csrf
+            
             <div class="form-group">
-                <label for="nama_kategori">Nama Kategori <span style="color: #ef4444;">*</span></label>
-                <input type="text" id="nama_kategori" name="nama_kategori" class="form-control" value="{{ old('nama_kategori') }}" required placeholder="Contoh: Obat Bebas">
-                @error('nama_kategori') <div class="text-danger">{{ $message }}</div> @enderror
+                <label for="category_code">Kode Kategori <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="category_code" name="category_code" class="form-control" value="{{ old('category_code') }}" required placeholder="Contoh: KTG-001">
+                @error('category_code') <div class="text-danger">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="category_name">Nama Kategori <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="category_name" name="category_name" class="form-control" value="{{ old('category_name') }}" required placeholder="Contoh: Obat Bebas">
+                @error('category_name') <div class="text-danger">{{ $message }}</div> @enderror
             </div>
             <div class="form-group">
-                <label for="keterangan">Keterangan</label>
-                <textarea id="keterangan" name="keterangan" class="form-control" rows="3" placeholder="Keterangan opsional...">{{ old('keterangan') }}</textarea>
-                @error('keterangan') <div class="text-danger">{{ $message }}</div> @enderror
+                <label for="description">Keterangan</label>
+                <textarea id="description" name="description" class="form-control" rows="3" placeholder="Keterangan opsional...">{{ old('description') }}</textarea>
+                @error('description') <div class="text-danger">{{ $message }}</div> @enderror
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeModal('addModal')">Batal</button>
@@ -110,12 +119,16 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="edit_nama_kategori">Nama Kategori <span style="color: #ef4444;">*</span></label>
-                <input type="text" id="edit_nama_kategori" name="nama_kategori" class="form-control" required>
+                <label for="edit_category_code">Kode Kategori <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="edit_category_code" name="category_code" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="edit_keterangan">Keterangan</label>
-                <textarea id="edit_keterangan" name="keterangan" class="form-control" rows="3"></textarea>
+                <label for="edit_category_name">Nama Kategori <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="edit_category_name" name="category_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="edit_description">Keterangan</label>
+                <textarea id="edit_description" name="description" class="form-control" rows="3"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeModal('editModal')">Batal</button>
@@ -145,14 +158,15 @@
     });
 
     // specific to Kategori Obat
-    function openEditModal(id, nama, keterangan) {
+    function openEditModal(id, code, nama, keterangan) {
         // Set Action URL directly replacing a dummy ID with the real ID
         let actionUrl = "{{ route('kategori-obat.update', ':id') }}";
         actionUrl = actionUrl.replace(':id', id);
         
         $('#editForm').attr('action', actionUrl);
-        $('#edit_nama_kategori').val(nama);
-        $('#edit_keterangan').val(keterangan);
+        $('#edit_category_code').val(code);
+        $('#edit_category_name').val(nama);
+        $('#edit_description').val(keterangan);
         
         openModal('editModal');
     }

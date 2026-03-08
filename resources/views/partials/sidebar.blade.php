@@ -23,7 +23,7 @@
                     <li><a href="{{ route('kategori-obat.index') }}" class="dropdown-item">Kategori Obat</a></li>
                     <li><a href="{{ route('satuan.index') }}" class="dropdown-item">Satuan</a></li>
                     <li><a href="{{ route('supplier.index') }}" class="dropdown-item">Supplier</a></li>
-                    <li><a href="#" class="dropdown-item">Pelanggan</a></li>
+                    <li><a href="{{ route('pelanggan.index') }}" class="dropdown-item">Pelanggan</a></li>
                     <li><a href="#" class="dropdown-item">Dokter</a></li>
                     <li><a href="{{ route('users.index') }}" class="dropdown-item">User</a></li>
                 </ul>

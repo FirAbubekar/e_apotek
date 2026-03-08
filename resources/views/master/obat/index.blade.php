@@ -27,7 +27,7 @@
         </button>
     </div>
     <div class="table-responsive">
-        <table>
+        <table class="datatable">
             <thead>
                 <tr>
                     <th width="5%">No</th>
@@ -44,16 +44,16 @@
                 @forelse ($obats as $index => $o)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td style="color: #6b7280; font-family: monospace;">{{ $o->kode_obat }}</td>
-                    <td style="font-weight: 600; color: var(--primary-color);">{{ $o->nama_obat }}</td>
-                    <td style="color: #4b5563;">{{ optional($o->kategori)->nama_kategori }}</td>
-                    <td style="color: #4b5563;">{{ optional($o->satuan)->nama_satuan }}</td>
-                    <td style="text-align: right;">Rp {{ number_format($o->harga_beli, 0, ',', '.') }}</td>
-                    <td style="text-align: right;">Rp {{ number_format($o->harga_jual, 0, ',', '.') }}</td>
+                    <td style="color: #6b7280; font-family: monospace;">{{ $o->medicine_code }}</td>
+                    <td style="font-weight: 600; color: var(--primary-color);">{{ $o->medicine_name }}</td>
+                    <td style="color: #4b5563;">{{ optional($o->kategori)->category_name }}</td>
+                    <td style="color: #4b5563;">{{ optional($o->satuan)->unit_name }}</td>
+                    <td style="text-align: right;">Rp {{ number_format($o->purchase_price, 0, ',', '.') }}</td>
+                    <td style="text-align: right;">Rp {{ number_format($o->selling_price, 0, ',', '.') }}</td>
                     <td>
                         <div style="display: flex; gap: 0.5rem; justify-content: center;">
                             <button type="button" class="btn btn-edit btn-sm"
-                                onclick="openEditObatModal({{ $o->id }}, '{{ addslashes($o->kode_obat) }}', '{{ addslashes($o->nama_obat) }}', {{ $o->kategori_id }}, {{ $o->satuan_id }}, {{ $o->harga_beli }}, {{ $o->harga_jual }})">
+                                onclick="openEditObatModal({{ $o->id }}, '{{ addslashes($o->medicine_code) }}', '{{ addslashes($o->medicine_name) }}', {{ $o->category_id ?? 'null' }}, {{ $o->unit_id ?? 'null' }}, {{ $o->purchase_price }}, {{ $o->selling_price }})">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                 Edit
                             </button>
@@ -109,7 +109,7 @@
                     <select id="kategori_id" name="kategori_id" class="form-control" required>
                         <option value="">-- Pilih Kategori --</option>
                         @foreach(\App\Models\KategoriObat::all() as $k)
-                            <option value="{{ $k->id }}" {{ old('kategori_id') == $k->id ? 'selected' : '' }}>{{ $k->nama_kategori }}</option>
+                            <option value="{{ $k->id }}" {{ old('kategori_id') == $k->id ? 'selected' : '' }}>{{ $k->category_name }}</option>
                         @endforeach
                     </select>
                     @error('kategori_id') <div class="text-danger">{{ $message }}</div> @enderror
@@ -119,7 +119,7 @@
                     <select id="satuan_id" name="satuan_id" class="form-control" required>
                         <option value="">-- Pilih Satuan --</option>
                         @foreach(\App\Models\Satuan::all() as $s)
-                            <option value="{{ $s->id }}" {{ old('satuan_id') == $s->id ? 'selected' : '' }}>{{ $s->nama_satuan }}</option>
+                            <option value="{{ $s->id }}" {{ old('satuan_id') == $s->id ? 'selected' : '' }}>{{ $s->unit_name }}</option>
                         @endforeach
                     </select>
                     @error('satuan_id') <div class="text-danger">{{ $message }}</div> @enderror
@@ -175,7 +175,7 @@
                     <select id="edit_kategori_id" name="kategori_id" class="form-control" required>
                         <option value="">-- Pilih Kategori --</option>
                         @foreach(\App\Models\KategoriObat::all() as $k)
-                            <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
+                            <option value="{{ $k->id }}">{{ $k->category_name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -184,7 +184,7 @@
                     <select id="edit_satuan_id" name="satuan_id" class="form-control" required>
                         <option value="">-- Pilih Satuan --</option>
                         @foreach(\App\Models\Satuan::all() as $s)
-                            <option value="{{ $s->id }}">{{ $s->nama_satuan }}</option>
+                            <option value="{{ $s->id }}">{{ $s->unit_name }}</option>
                         @endforeach
                     </select>
                 </div>

@@ -12,28 +12,37 @@ class ObatController extends Controller
     public function index()
     {
         $obats = Obat::with(['kategori', 'satuan'])->get();
-        return view('obat.index', compact('obats'));
+        return view('master.obat.index', compact('obats'));
     }
 
     public function create()
     {
         $kategoris = KategoriObat::all();
         $satuans = Satuan::all();
-        return view('obat.create', compact('kategoris', 'satuans'));
+        return view('master.obat.create', compact('kategoris', 'satuans'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'kode_obat' => 'required|string|unique:obat,kode_obat|max:50',
+            'kode_obat' => 'required|string|unique:medicines,medicine_code|max:50',
             'nama_obat' => 'required|string|max:255',
-            'kategori_id' => 'required|exists:kategori_obat,id',
-            'satuan_id' => 'required|exists:satuan,id',
+            'kategori_id' => 'required|exists:categories,id',
+            'satuan_id' => 'required|exists:units,id',
             'harga_beli' => 'required|numeric|min:0',
             'harga_jual' => 'required|numeric|min:0',
         ]);
 
-        Obat::create($request->all());
+        Obat::create([
+            'medicine_code' => $request->kode_obat,
+            'barcode' => $request->kode_obat, // Use medicine code if no barcode is provided
+            'medicine_name' => $request->nama_obat,
+            'category_id' => $request->kategori_id,
+            'unit_id' => $request->satuan_id,
+            'supplier_id' => \App\Models\Supplier::first()->id ?? 1, // Fallback assigning to first supplier
+            'purchase_price' => $request->harga_beli,
+            'selling_price' => $request->harga_jual,
+        ]);
 
         return redirect()->route('obat.index')->with('success', 'Obat berhasil ditambahkan');
     }
@@ -47,21 +56,28 @@ class ObatController extends Controller
     {
         $kategoris = KategoriObat::all();
         $satuans = Satuan::all();
-        return view('obat.edit', compact('obat', 'kategoris', 'satuans'));
+        return view('master.obat.edit', compact('obat', 'kategoris', 'satuans'));
     }
 
     public function update(Request $request, Obat $obat)
     {
         $request->validate([
-            'kode_obat' => 'required|string|max:50|unique:obat,kode_obat,' . $obat->id,
+            'kode_obat' => 'required|string|max:50|unique:medicines,medicine_code,' . $obat->id,
             'nama_obat' => 'required|string|max:255',
-            'kategori_id' => 'required|exists:kategori_obat,id',
-            'satuan_id' => 'required|exists:satuan,id',
+            'kategori_id' => 'required|exists:categories,id',
+            'satuan_id' => 'required|exists:units,id',
             'harga_beli' => 'required|numeric|min:0',
             'harga_jual' => 'required|numeric|min:0',
         ]);
 
-        $obat->update($request->all());
+        $obat->update([
+            'medicine_code' => $request->kode_obat,
+            'medicine_name' => $request->nama_obat,
+            'category_id' => $request->kategori_id,
+            'unit_id' => $request->satuan_id,
+            'purchase_price' => $request->harga_beli,
+            'selling_price' => $request->harga_jual,
+        ]);
 
         return redirect()->route('obat.index')->with('success', 'Obat berhasil diperbarui');
     }

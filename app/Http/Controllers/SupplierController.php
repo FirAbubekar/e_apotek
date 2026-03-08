@@ -10,23 +10,26 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = Supplier::all();
-        return view('supplier.index', compact('suppliers'));
+        return view('master.supplier.index', compact('suppliers'));
     }
 
     public function create()
     {
-        return view('supplier.create');
+        return view('master.supplier.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_supplier' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'no_telp' => 'required|string|max:20',
+        $validated = $request->validate([
+            'supplier_code' => 'required|string|unique:suppliers,supplier_code|max:255',
+            'supplier_name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'phone' => 'required|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'contact_person' => 'nullable|string|max:255',
         ]);
 
-        Supplier::create($request->all());
+        Supplier::create($validated);
 
         return redirect()->route('supplier.index')->with('success', 'Supplier berhasil ditambahkan');
     }
@@ -38,18 +41,21 @@ class SupplierController extends Controller
 
     public function edit(Supplier $supplier)
     {
-        return view('supplier.edit', compact('supplier'));
+        return view('master.supplier.edit', compact('supplier'));
     }
 
     public function update(Request $request, Supplier $supplier)
     {
-        $request->validate([
-            'nama_supplier' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'no_telp' => 'required|string|max:20',
+        $validated = $request->validate([
+            'supplier_code' => 'required|string|max:255|unique:suppliers,supplier_code,' . $supplier->id,
+            'supplier_name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'phone' => 'required|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'contact_person' => 'nullable|string|max:255',
         ]);
 
-        $supplier->update($request->all());
+        $supplier->update($validated);
 
         return redirect()->route('supplier.index')->with('success', 'Supplier berhasil diperbarui');
     }

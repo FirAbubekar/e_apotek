@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('e_apotik', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('no_hp')->nullable();
-            $table->text('alamat')->nullable();
+            $table->string('nama_apotek');
+            $table->text('alamat');
+            $table->string('no_telp');
+            $table->string('email');
+            $table->string('sip')->nullable();
+            $table->string('sia')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('e_apotik');
     }
 };

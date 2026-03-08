@@ -27,27 +27,29 @@
         </button>
     </div>
     <div class="table-responsive">
-        <table>
+        <table class="datatable">
             <thead>
                 <tr>
                     <th width="5%">No</th>
+                    <th width="15%">Kode Supplier</th>
                     <th width="25%">Nama Supplier</th>
                     <th width="35%">Alamat</th>
                     <th width="15%">No Telp</th>
-                    <th width="20%">Aksi</th>
+                    <th width="15%">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($suppliers as $index => $s)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td style="font-weight: 600; color: var(--primary-color);">{{ $s->nama_supplier }}</td>
-                    <td style="color: #6b7280;">{{ $s->alamat }}</td>
-                    <td style="color: #6b7280;">{{ $s->no_telp }}</td>
+                    <td style="color: #6b7280; font-family: monospace;">{{ $s->supplier_code }}</td>
+                    <td style="font-weight: 600; color: var(--primary-color);">{{ $s->supplier_name }}</td>
+                    <td style="color: #6b7280;">{{ $s->address }}</td>
+                    <td style="color: #6b7280;">{{ $s->phone }}</td>
                     <td>
                         <div style="display: flex; gap: 0.5rem;">
                             <button type="button" class="btn btn-edit btn-sm" 
-                                onclick="openEditSupplierModal({{ $s->id }}, '{{ addslashes($s->nama_supplier) }}', '{{ addslashes($s->no_telp) }}', '{{ addslashes($s->alamat) }}')">
+                                onclick="openEditSupplierModal({{ $s->id }}, '{{ addslashes($s->supplier_code) }}', '{{ addslashes($s->supplier_name) }}', '{{ addslashes($s->phone) }}', '{{ addslashes($s->address) }}')">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                 Edit
                             </button>
@@ -64,7 +66,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" style="text-align: center; color: #9ca3af; padding: 3rem;">Belum ada data supplier.</td>
+                    <td colspan="6" style="text-align: center; color: #9ca3af; padding: 3rem;">Belum ada data supplier.</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -83,20 +85,27 @@
         </div>
         <form action="{{ route('supplier.store') }}" method="POST">
             @csrf
+
             <div class="form-group">
-                <label for="nama_supplier">Nama Supplier <span style="color: #ef4444;">*</span></label>
-                <input type="text" id="nama_supplier" name="nama_supplier" class="form-control" value="{{ old('nama_supplier') }}" required placeholder="Contoh: PT. Kimia Farma">
-                @error('nama_supplier') <div class="text-danger">{{ $message }}</div> @enderror
+                <label for="supplier_code">Kode Supplier <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="supplier_code" name="supplier_code" class="form-control" value="{{ old('supplier_code') }}" required placeholder="Contoh: SUP-001">
+                @error('supplier_code') <div class="text-danger">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="supplier_name">Nama Supplier <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="supplier_name" name="supplier_name" class="form-control" value="{{ old('supplier_name') }}" required placeholder="Contoh: PT. Kimia Farma">
+                @error('supplier_name') <div class="text-danger">{{ $message }}</div> @enderror
             </div>
             <div class="form-group">
-                <label for="no_telp">No Telp <span style="color: #ef4444;">*</span></label>
-                <input type="text" id="no_telp" name="no_telp" class="form-control" value="{{ old('no_telp') }}" required placeholder="Contoh: 021-1234567">
-                @error('no_telp') <div class="text-danger">{{ $message }}</div> @enderror
+                <label for="phone">No Telp <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone') }}" required placeholder="Contoh: 021-1234567">
+                @error('phone') <div class="text-danger">{{ $message }}</div> @enderror
             </div>
             <div class="form-group">
-                <label for="alamat_supplier">Alamat <span style="color: #ef4444;">*</span></label>
-                <textarea id="alamat_supplier" name="alamat" class="form-control" rows="3" required placeholder="Alamat lengkap supplier...">{{ old('alamat') }}</textarea>
-                @error('alamat') <div class="text-danger">{{ $message }}</div> @enderror
+                <label for="address">Alamat <span style="color: #ef4444;">*</span></label>
+                <textarea id="address" name="address" class="form-control" rows="3" required placeholder="Alamat lengkap supplier...">{{ old('address') }}</textarea>
+                @error('address') <div class="text-danger">{{ $message }}</div> @enderror
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeModal('addModalSupplier')">Batal</button>
@@ -117,16 +126,20 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="edit_nama_supplier">Nama Supplier <span style="color: #ef4444;">*</span></label>
-                <input type="text" id="edit_nama_supplier" name="nama_supplier" class="form-control" required>
+                <label for="edit_supplier_code">Kode Supplier <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="edit_supplier_code" name="supplier_code" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="edit_no_telp">No Telp <span style="color: #ef4444;">*</span></label>
-                <input type="text" id="edit_no_telp" name="no_telp" class="form-control" required>
+                <label for="edit_supplier_name">Nama Supplier <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="edit_supplier_name" name="supplier_name" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="edit_alamat_supplier">Alamat <span style="color: #ef4444;">*</span></label>
-                <textarea id="edit_alamat_supplier" name="alamat" class="form-control" rows="3" required></textarea>
+                <label for="edit_phone">No Telp <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="edit_phone" name="phone" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="edit_address">Alamat <span style="color: #ef4444;">*</span></label>
+                <textarea id="edit_address" name="address" class="form-control" rows="3" required></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeModal('editModalSupplier')">Batal</button>
@@ -145,14 +158,15 @@
         $(window).click(function(event) { if ($(event.target).hasClass('modal')) { $(event.target).removeClass('show'); } });
     }
 
-    function openEditSupplierModal(id, nama, telp, alamat) {
+    function openEditSupplierModal(id, code, nama, telp, alamat) {
         let actionUrl = "{{ route('supplier.update', ':id') }}";
         actionUrl = actionUrl.replace(':id', id);
         
         $('#editFormSupplier').attr('action', actionUrl);
-        $('#edit_nama_supplier').val(nama);
-        $('#edit_no_telp').val(telp);
-        $('#edit_alamat_supplier').val(alamat);
+        $('#edit_supplier_code').val(code);
+        $('#edit_supplier_name').val(nama);
+        $('#edit_phone').val(telp);
+        $('#edit_address').val(alamat);
         
         openModal('editModalSupplier');
     }

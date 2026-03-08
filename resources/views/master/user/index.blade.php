@@ -34,7 +34,7 @@
         </button>
     </div>
     <div class="table-responsive">
-        <table>
+        <table class="datatable">
             <thead>
                 <tr>
                     <th width="5%">No</th>

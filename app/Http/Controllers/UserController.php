@@ -11,12 +11,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('user.index', compact('users'));
+        return view('master.user.index', compact('users'));
     }
 
     public function create()
     {
-        return view('user.create');
+        return view('master.user.create');
     }
 
     public function store(Request $request)
@@ -31,6 +31,8 @@ class UserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'password' => Hash::make($request->password),
+            'role_id' => 1, // Default to admin for now
+            'is_active' => 1, // Default to active
         ]);
 
         return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan');
@@ -43,7 +45,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('user.edit', compact('user'));
+        return view('master.user.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)

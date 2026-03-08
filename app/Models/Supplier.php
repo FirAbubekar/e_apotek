@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Supplier extends Model
 {
-    protected $table = 'supplier';
+    protected $table = 'suppliers';
 
     protected $fillable = [
-        'nama_supplier',
-        'alamat',
-        'no_telp',
+        'supplier_code',
+        'supplier_name',
+        'address',
+        'phone',
+        'email',
+        'contact_person',
     ];
 
     public function pembelian()

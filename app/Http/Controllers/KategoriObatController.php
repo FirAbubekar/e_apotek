@@ -10,22 +10,23 @@ class KategoriObatController extends Controller
     public function index()
     {
         $kategoris = KategoriObat::all();
-        return view('kategori_obat.index', compact('kategoris'));
+        return view('master.kategori_obat.index', compact('kategoris'));
     }
 
     public function create()
     {
-        return view('kategori_obat.create');
+        return view('master.kategori_obat.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_kategori' => 'required|string|max:255',
-            'keterangan' => 'nullable|string',
+        $validated = $request->validate([
+            'category_code' => 'required|string|unique:categories,category_code|max:255',
+            'category_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
         ]);
 
-        KategoriObat::create($request->all());
+        KategoriObat::create($validated);
 
         return redirect()->route('kategori-obat.index')->with('success', 'Kategori Obat berhasil ditambahkan');
     }
@@ -37,17 +38,18 @@ class KategoriObatController extends Controller
 
     public function edit(KategoriObat $kategori_obat)
     {
-        return view('kategori_obat.edit', compact('kategori_obat'));
+        return view('master.kategori_obat.edit', compact('kategori_obat'));
     }
 
     public function update(Request $request, KategoriObat $kategori_obat)
     {
-        $request->validate([
-            'nama_kategori' => 'required|string|max:255',
-            'keterangan' => 'nullable|string',
+        $validated = $request->validate([
+            'category_code' => 'required|string|max:255|unique:categories,category_code,' . $kategori_obat->id,
+            'category_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
         ]);
 
-        $kategori_obat->update($request->all());
+        $kategori_obat->update($validated);
 
         return redirect()->route('kategori-obat.index')->with('success', 'Kategori Obat berhasil diperbarui');
     }

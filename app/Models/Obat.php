@@ -6,25 +6,35 @@ use Illuminate\Database\Eloquent\Model;
 
 class Obat extends Model
 {
-    protected $table = 'obat';
+    protected $table = 'medicines';
 
     protected $fillable = [
-        'kode_obat',
-        'nama_obat',
-        'kategori_id',
-        'satuan_id',
-        'harga_beli',
-        'harga_jual',
+        'medicine_code',
+        'barcode',
+        'medicine_name',
+        'category_id',
+        'unit_id',
+        'supplier_id',
+        'purchase_price',
+        'selling_price',
+        'minimum_stock',
+        'description',
+        'is_active',
     ];
 
     public function kategori()
     {
-        return $this->belongsTo(KategoriObat::class, 'kategori_id');
+        return $this->belongsTo(KategoriObat::class, 'category_id');
     }
 
     public function satuan()
     {
-        return $this->belongsTo(Satuan::class, 'satuan_id');
+        return $this->belongsTo(Satuan::class, 'unit_id');
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
     }
 
     public function stok()

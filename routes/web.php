@@ -8,6 +8,7 @@ use App\Http\Controllers\KategoriObatController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ObatController;
+use App\Http\Controllers\CustomerController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -28,4 +29,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('satuan', SatuanController::class);
     Route::resource('supplier', SupplierController::class);
     Route::resource('obat', ObatController::class);
+    Route::resource('pelanggan', CustomerController::class);
 });

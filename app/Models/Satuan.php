@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Satuan extends Model
 {
-    protected $table = 'satuan';
+    protected $table = 'units';
 
     protected $fillable = [
-        'nama_satuan',
-        'keterangan',
+        'unit_code',
+        'unit_name',
+        'description',
     ];
 
     public function obat()

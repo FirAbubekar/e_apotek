@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class KategoriObat extends Model
 {
-    protected $table = 'kategori_obat';
+    protected $table = 'categories';
 
     protected $fillable = [
-        'nama_kategori',
-        'keterangan',
+        'category_code',
+        'category_name',
+        'description',
     ];
 
     public function obat()

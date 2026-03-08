@@ -6,6 +6,8 @@
     <title>@yield('title', 'Apotekku')</title>
     <!-- Include Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <style>
         :root {
             --primary-color: #0d9488;
@@ -433,6 +435,40 @@
 
         .text-danger { color: #ef4444; font-size: 0.85rem; margin-top: 0.35rem; font-weight: 500;}
 
+        /* DataTables Custom Overrides */
+        .dataTables_wrapper .dataTables_filter input {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.4rem 0.75rem;
+            margin-left: 0.5rem;
+            outline: none;
+        }
+        .dataTables_wrapper .dataTables_filter input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+        .dataTables_wrapper .dataTables_length select {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.3rem 1.5rem 0.3rem 0.5rem;
+            outline: none;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: var(--primary-light) !important;
+            border-color: var(--primary-color) !important;
+            color: var(--primary-hover) !important;
+            border-radius: 0.5rem;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: var(--primary-color) !important;
+            color: white !important;
+            border-color: var(--primary-hover) !important;
+            border-radius: 0.5rem;
+        }
+        table.dataTable.no-footer {
+            border-bottom: 1px solid var(--border-color) !important;
+        }
+
         /* Alerts */
         .alert {
             padding: 1rem 1.25rem; 
@@ -507,6 +543,24 @@
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            if ($('.datatable').length > 0) {
+                $('.datatable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
+                    },
+                    "pageLength": 10,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false
+                });
+            }
+        });
+    </script>
+
     <!-- Base Modal Scripts via Stack -->
     @stack('scripts')
 </body>

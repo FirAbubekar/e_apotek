@@ -10,22 +10,23 @@ class SatuanController extends Controller
     public function index()
     {
         $satuans = Satuan::all();
-        return view('satuan.index', compact('satuans'));
+        return view('master.satuan.index', compact('satuans'));
     }
 
     public function create()
     {
-        return view('satuan.create');
+        return view('master.satuan.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_satuan' => 'required|string|max:255',
-            'keterangan' => 'nullable|string',
+        $validated = $request->validate([
+            'unit_code' => 'required|string|unique:units,unit_code|max:255',
+            'unit_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
         ]);
 
-        Satuan::create($request->all());
+        Satuan::create($validated);
 
         return redirect()->route('satuan.index')->with('success', 'Satuan berhasil ditambahkan');
     }
@@ -37,17 +38,18 @@ class SatuanController extends Controller
 
     public function edit(Satuan $satuan)
     {
-        return view('satuan.edit', compact('satuan'));
+        return view('master.satuan.edit', compact('satuan'));
     }
 
     public function update(Request $request, Satuan $satuan)
     {
-        $request->validate([
-            'nama_satuan' => 'required|string|max:255',
-            'keterangan' => 'nullable|string',
+        $validated = $request->validate([
+            'unit_code' => 'required|string|max:255|unique:units,unit_code,' . $satuan->id,
+            'unit_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
         ]);
 
-        $satuan->update($request->all());
+        $satuan->update($validated);
 
         return redirect()->route('satuan.index')->with('success', 'Satuan berhasil diperbarui');
     }
