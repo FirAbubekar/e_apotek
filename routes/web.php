@@ -9,6 +9,7 @@ use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PembelianController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -30,4 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('supplier', SupplierController::class);
     Route::resource('obat', ObatController::class);
     Route::resource('pelanggan', CustomerController::class);
+
+    // Transaksi Routes
+    Route::resource('pembelian', PembelianController::class)->except(['edit','update']);
 });
