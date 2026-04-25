@@ -25,7 +25,6 @@
                     <li><a href="{{ route('supplier.index') }}" class="dropdown-item">Supplier</a></li>
                     <li><a href="{{ route('pelanggan.index') }}" class="dropdown-item">Pelanggan</a></li>
                     <li><a href="#" class="dropdown-item">Dokter</a></li>
-                    <li><a href="{{ route('users.index') }}" class="dropdown-item">User</a></li>
                 </ul>
             </li>
 
@@ -38,10 +37,10 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="{{ route('pembelian.index') }}" class="dropdown-item">Pembelian</a></li>
-                    <li><a href="#" class="dropdown-item">Penjualan</a></li>
+                    <li><a href="{{ route('penjualan.index') }}" class="dropdown-item">Penjualan</a></li>
                     <li><a href="#" class="dropdown-item">Penjualan Resep</a></li>
-                    <li><a href="#" class="dropdown-item">Retur Pembelian</a></li>
-                    <li><a href="#" class="dropdown-item">Retur Penjualan</a></li>
+                    <li><a href="{{ route('return-pembelian.index') }}" class="dropdown-item">Retur Pembelian</a></li>
+                    <li><a href="{{ route('return-penjualan.index') }}" class="dropdown-item">Retur Penjualan</a></li>
                 </ul>
             </li>
 
@@ -53,10 +52,10 @@
                     <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#" class="dropdown-item">Stok Obat</a></li>
-                    <li><a href="#" class="dropdown-item">Stok Opname</a></li>
-                    <li><a href="#" class="dropdown-item">Mutasi Stok</a></li>
-                    <li><a href="#" class="dropdown-item">Obat Expired</a></li>
+                    <li><a href="{{ route('stok-obat.index') }}" class="dropdown-item">Stok Obat</a></li>
+                    <li><a href="{{ route('stok-opname.index') }}" class="dropdown-item">Stok Opname</a></li>
+                    <li><a href="{{ route('mutasi-stok.index') }}" class="dropdown-item">Mutasi Stok</a></li>
+                    <li><a href="{{ route('obat-expired.index') }}" class="dropdown-item">Obat Expired</a></li>
                 </ul>
             </li>
 
@@ -68,12 +67,13 @@
                     <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#" class="dropdown-item">Kas Masuk</a></li>
-                    <li><a href="#" class="dropdown-item">Kas Keluar</a></li>
-                    <li><a href="#" class="dropdown-item">Tutup Kasir</a></li>
+                    <li><a href="{{ route('kas-masuk.index') }}" class="dropdown-item">Kas Masuk</a></li>
+                    <li><a href="{{ route('kas-keluar.index') }}" class="dropdown-item">Kas Keluar</a></li>
+                    <li><a href="{{ route('tutup-kasir.index') }}" class="dropdown-item">Tutup Kasir</a></li>
                 </ul>
             </li>
 
+            @if(false)
             <!-- Laporan -->
             <li class="nav-item">
                 <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(this)">
@@ -88,6 +88,7 @@
                     <li><a href="#" class="dropdown-item">Laporan Keuangan</a></li>
                 </ul>
             </li>
+            @endif
 
             <!-- Pengaturan -->
             <li class="nav-item">
@@ -97,8 +98,8 @@
                     <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#" class="dropdown-item">Profil Apotek</a></li>
-                    <li><a href="#" class="dropdown-item">User Management</a></li>
+                    <li><a href="{{ route('profil-apotek.index') }}" class="dropdown-item">Profil Apotek</a></li>
+                    <li><a href="{{ route('users.index') }}" class="dropdown-item">User Management</a></li>
                     <li><a href="#" class="dropdown-item">Backup Database</a></li>
                 </ul>
             </li>

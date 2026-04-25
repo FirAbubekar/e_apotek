@@ -6,74 +6,76 @@
 @section('styles')
 <style>
     /* ===== PAGE HEADER ===== */
+    /* Header Banner Premium (Deep Emerald) */
     .page-header-banner {
-        background: linear-gradient(135deg, #0d9488 0%, #0891b2 50%, #6366f1 100%);
-        border-radius: 1.25rem;
-        padding: 1.75rem 2rem;
-        margin-bottom: 1.75rem;
+        background-color: #064e4b !important;
+        background-image: linear-gradient(135deg, #064e4b, #042f2e) !important;
+        border-radius: 1.5rem;
+        padding: 2.5rem 2rem;
+        color: white;
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 20px 25px -5px rgba(6, 78, 75, 0.2);
         position: relative;
         overflow: hidden;
+        border: none !important;
+    }
+
+    .page-header-banner::before {
+        content: ''; position: absolute; top: -50px; right: -50px;
+        width: 250px; height: 250px; background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+
+    .page-header-banner::after {
+        content: ''; position: absolute; bottom: -70px; right: 150px;
+        width: 180px; height: 180px; background: rgba(255,255,255,0.03);
+        border-radius: 50%;
+    }
+
+    .header-content h2 { 
+        font-weight: 800; 
+        margin: 0 0 0.4rem 0 !important; 
+        letter-spacing: -0.025em; 
+        color: #ffffff !important;
+        font-size: 1.75rem !important;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        box-shadow: 0 10px 30px rgba(13, 148, 136, 0.25);
-    }
-    .page-header-banner::before {
-        content: '';
-        position: absolute;
-        top: -40px;
-        right: -40px;
-        width: 200px;
-        height: 200px;
-        background: rgba(255,255,255,0.07);
-        border-radius: 50%;
-    }
-    .page-header-banner::after {
-        content: '';
-        position: absolute;
-        bottom: -60px;
-        right: 180px;
-        width: 150px;
-        height: 150px;
-        background: rgba(255,255,255,0.05);
-        border-radius: 50%;
-    }
-    .page-header-left { position: relative; z-index: 1; }
-    .page-header-left h2 {
-        margin: 0 0 0.3rem 0;
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: #1a1a1a;
-    }
-    .page-header-left p {
-        margin: 0;
-        font-size: 0.9rem;
-        color: rgba(0,0,0,0.60);
-    }
-    .page-header-right {
+        gap: 0.75rem;
         position: relative;
         z-index: 1;
     }
+
+    .header-content p { 
+        color: #99f6e4 !important; 
+        font-size: 0.95rem !important; 
+        margin: 0 !important; 
+        font-weight: 500;
+        position: relative;
+        z-index: 1;
+    }
+
     .btn-add-obat {
-        background: rgba(255,255,255,0.15);
+        background: rgba(255,255,255,0.1) !important;
         backdrop-filter: blur(10px);
-        border: 1.5px solid rgba(255,255,255,0.4);
-        color: #fff;
-        padding: 0.7rem 1.5rem;
-        border-radius: 0.75rem;
-        font-size: 0.9rem;
-        font-weight: 700;
-        cursor: pointer;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+        color: #fff !important;
+        padding: 0.8rem 1.5rem !important;
+        border-radius: 0.75rem !important;
+        font-weight: 700 !important;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s;
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        transition: all 0.2s;
-        letter-spacing: 0.02em;
     }
+
     .btn-add-obat:hover {
-        background: rgba(255,255,255,0.28);
+        background: rgba(255,255,255,0.2) !important;
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
     /* ===== MINI STATS ===== */
@@ -302,16 +304,16 @@
 
 {{-- ===== PAGE HEADER BANNER ===== --}}
 <div class="page-header-banner">
-    <div class="page-header-left">
+    <div class="header-content">
         <h2>
-            <svg style="display:inline-block;vertical-align:-4px;margin-right:0.5rem" width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
             Manajemen Data Obat
         </h2>
         <p>Kelola data obat, kategori, satuan, harga beli dan harga jual dengan mudah.</p>
     </div>
     <div class="page-header-right">
         <button type="button" class="btn-add-obat" onclick="openModal('addModalObat')">
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
             Tambah Obat
         </button>
     </div>

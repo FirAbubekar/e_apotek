@@ -5,21 +5,77 @@
 
 @section('styles')
 <style>
+    /* Header Banner Premium (Deep Emerald) */
     .page-header-banner {
-        background: linear-gradient(135deg, #0d9488 0%, #06b6d4 60%, #0284c7 100%);
-        border-radius: 1.25rem; padding: 1.75rem 2rem; margin-bottom: 1.75rem;
-        position: relative; overflow: hidden;
-        display: flex; align-items: center; justify-content: space-between;
-        box-shadow: 0 10px 30px rgba(13,148,136,.25);
+        background-color: #064e4b !important;
+        background-image: linear-gradient(135deg, #064e4b, #042f2e) !important;
+        border-radius: 1.5rem;
+        padding: 2.5rem 2rem;
+        color: white;
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 20px 25px -5px rgba(6, 78, 75, 0.2);
+        position: relative;
+        overflow: hidden;
+        border: none !important;
     }
-    .page-header-banner::before { content:''; position:absolute; top:-40px; right:-40px; width:200px; height:200px; background:rgba(255,255,255,.08); border-radius:50%; }
-    .page-header-banner::after  { content:''; position:absolute; bottom:-60px; right:160px; width:150px; height:150px; background:rgba(255,255,255,.05); border-radius:50%; }
-    .page-header-left { position:relative; z-index:1; }
-    .page-header-left h2 { margin:0 0 .3rem; font-size:1.6rem; font-weight:800; color:#1a1a1a; }
-    .page-header-left p  { margin:0; font-size:.9rem; color:rgba(0,0,0,0.60); }
-    .page-header-right   { position:relative; z-index:1; }
-    .btn-add-new { background:rgba(255,255,255,.18); backdrop-filter:blur(10px); border:1.5px solid rgba(255,255,255,.45); color:#fff; padding:.7rem 1.5rem; border-radius:.75rem; font-size:.9rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:.5rem; transition:all .2s; }
-    .btn-add-new:hover { background:rgba(255,255,255,.3); transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.15); }
+
+    .page-header-banner::before {
+        content: ''; position: absolute; top: -50px; right: -50px;
+        width: 250px; height: 250px; background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+
+    .page-header-banner::after {
+        content: ''; position: absolute; bottom: -70px; right: 150px;
+        width: 180px; height: 180px; background: rgba(255,255,255,0.03);
+        border-radius: 50%;
+    }
+
+    .header-content h2 { 
+        font-weight: 800; 
+        margin: 0 0 0.4rem 0 !important; 
+        letter-spacing: -0.025em; 
+        color: #ffffff !important;
+        font-size: 1.75rem !important;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .header-content p { 
+        color: #99f6e4 !important; 
+        font-size: 0.95rem !important; 
+        margin: 0 !important; 
+        font-weight: 500;
+        position: relative;
+        z-index: 1;
+    }
+
+    .btn-add-new {
+        background: rgba(255,255,255,0.1) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2) !important;
+        color: #fff !important;
+        padding: 0.8rem 1.5rem !important;
+        border-radius: 0.75rem !important;
+        font-weight: 700 !important;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-add-new:hover {
+        background: rgba(255,255,255,0.2) !important;
+        transform: translateY(-2px);
+    }
     .mini-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:1.1rem; margin-bottom:1.75rem; }
     .mini-stat { background:#fff; border-radius:1rem; padding:1.2rem 1.5rem; display:flex; align-items:center; gap:1rem; border:1px solid var(--border-color); box-shadow:0 2px 12px rgba(0,0,0,.04); transition:transform .2s,box-shadow .2s; }
     .mini-stat:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.08); }
@@ -63,13 +119,16 @@
 @endif
 
 <div class="page-header-banner">
-    <div class="page-header-left">
-        <h2>⚖️ Manajemen Satuan Obat</h2>
+    <div class="header-content">
+        <h2>
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            Manajemen Satuan Obat
+        </h2>
         <p>Kelola satuan ukuran obat seperti tablet, botol, strip, dan lainnya.</p>
     </div>
     <div class="page-header-right">
-        <button type="button" class="btn-add-new" onclick="openModal('addModalSatuan')">
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+        <button type="button" class="btn btn-add-new" onclick="openModal('addModalSatuan')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
             Tambah Satuan
         </button>
     </div>

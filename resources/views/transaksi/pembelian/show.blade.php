@@ -47,14 +47,54 @@
 
     .btn-print { display:flex; align-items:center; justify-content:center; gap:.5rem; width:100%; padding:.8rem 1.5rem; background:linear-gradient(135deg,#1e3a5f,#2563eb); border:none; border-radius:.85rem; color:#fff; font-size:.9rem; font-weight:700; cursor:pointer; margin:1rem 1.5rem 0; width:calc(100% - 3rem); transition:all .2s; }
     .btn-print:hover { opacity:.9; transform:translateY(-1px); }
+
+    /* ===== PRINT STYLES ===== */
+    .print-header { display: none; padding-bottom: 2rem; border-bottom: 2px solid #334155; margin-bottom: 2rem; }
+    .print-header-content { display: flex; justify-content: space-between; align-items: center; }
+    .pharmacy-info h2 { margin: 0; color: #0d9488; font-size: 1.8rem; font-weight: 800; }
+    .pharmacy-info p { margin: 2px 0; color: #475569; font-size: 0.9rem; font-weight: 500; }
+    .invoice-label { text-align: right; }
+    .invoice-label h1 { margin: 0; font-size: 2.2rem; color: #1e293b; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+    
+    @media print {
+        @page { size: A4; margin: 1.5cm; }
+        body { background: white !important; padding: 0 !important; }
+        .sidebar, .top-navbar, .back-btn, .btn-print, .summary-header, .summary-body > .btn-back-wrapper { display: none !important; }
+        .main-content { padding: 0 !important; margin: 0 !important; }
+        .detail-grid { display: block !important; }
+        .panel-card, .summary-card { border: none !important; box-shadow: none !important; margin-bottom: 1rem !important; }
+        .summary-card { position: static !important; }
+        .panel-header { border-bottom: 1px solid #e2e8f0 !important; padding: 0.5rem 0 !important; }
+        .panel-icon { display: none !important; }
+        .print-header { display: block !important; }
+        .faktur-badge { border: none !important; padding: 0 !important; font-size: 1.1rem !important; color: black !important; }
+        .detail-items th { background: #f1f5f9 !important; color: black !important; border-bottom: 1px solid black !important; }
+        .grand-sum { border: 1px solid #e2e8f0 !important; background: transparent !important; margin-top: 2rem; }
+        .grand-sum .gv { color: black !important; }
+        .no-print { display: none !important; }
+        .back-btn-wrapper { display: none !important; }
+    }
 </style>
 @endsection
 
 @section('content')
-<a href="{{ route('pembelian.index') }}" class="back-btn">
-    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-    Kembali ke Daftar Pembelian
 </a>
+
+{{-- PRINT HEADER (KOP SURAT) --}}
+<div class="print-header">
+    <div class="print-header-content">
+        <div class="pharmacy-info">
+            <h2>{{ $apotek->nama_apotek ?? 'APOTEKKU' }}</h2>
+            <p>{{ $apotek->alamat ?? 'Jl. Raya Sehat No. 123' }}</p>
+            <p>Telp: {{ $apotek->no_telp ?? '-' }} | Email: {{ $apotek->email ?? '-' }}</p>
+            <p>SIA: {{ $apotek->sia ?? '-' }} | SIP: {{ $apotek->sip ?? '-' }}</p>
+        </div>
+        <div class="invoice-label">
+            <h1>FAKTUR</h1>
+            <p style="font-weight: 700; color: #64748b;">ASLI PEMBELIAN</p>
+        </div>
+    </div>
+</div>
 
 <div class="detail-grid">
     {{-- KIRI: Info + Tabel Detail --}}
@@ -110,7 +150,7 @@
                 <thead>
                     <tr>
                         <th style="text-align:left;">No</th>
-                        <th style="text-align:left;">Kode</th>
+                        <th style="text-align:left;" class="no-print">Kode</th>
                         <th style="text-align:left;">Nama Obat</th>
                         <th style="text-align:left;">Satuan</th>
                         <th style="text-align:center;">Qty</th>
@@ -122,7 +162,7 @@
                     @forelse($pembelian->detailPembelian as $i => $detail)
                     <tr>
                         <td style="color:#9ca3af;font-size:.82rem;">{{ $i + 1 }}</td>
-                        <td><span class="obat-code">{{ optional($detail->obat)->medicine_code ?? '—' }}</span></td>
+                        <td class="no-print"><span class="obat-code">{{ optional($detail->obat)->medicine_code ?? '—' }}</span></td>
                         <td><span class="obat-name">{{ optional($detail->obat)->medicine_name ?? '—' }}</span></td>
                         <td style="color:#6b7280;font-size:.85rem;">{{ optional(optional($detail->obat)->satuan)->unit_name ?? '—' }}</td>
                         <td style="text-align:center;"><span class="num-val">{{ $detail->jumlah }}</span></td>
@@ -169,7 +209,7 @@
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                 Cetak / Print
             </button>
-            <div style="padding:.75rem 1.5rem 1.25rem;">
+            <div class="back-btn-wrapper" style="padding:.75rem 1.5rem 1.25rem;">
                 <a href="{{ route('pembelian.index') }}" style="display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.75rem;background:#f8fafc;border:1.5px solid var(--border-color);border-radius:.75rem;color:var(--text-color);font-size:.88rem;font-weight:700;text-decoration:none;transition:background .2s;">
                     <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                     Kembali ke Daftar

@@ -104,7 +104,7 @@ class PembelianController extends Controller
                 ]);
 
                 // 4. Tambah stok pada medicine_stocks
-                MedicineStock::create([
+                $ms = MedicineStock::create([
                     'medicine_id' => $item['obat_id'],
                     'batch_id'    => $batch->id,
                     'stock_qty'   => $item['jumlah'],
@@ -112,6 +112,18 @@ class PembelianController extends Controller
                     'stock_out'   => 0,
                     'last_stock'  => $item['jumlah'],
                     'created_by'  => Auth::id(),
+                ]);
+
+                // Record Mutation for audit trail
+                \App\Models\StockMutation::create([
+                    'medicine_stock_id' => $ms->id,
+                    'type'              => 'Masuk',
+                    'qty_change'        => $item['jumlah'],
+                    'qty_before'        => 0,
+                    'qty_after'         => $item['jumlah'],
+                    'reference'         => 'Pembelian #' . $pembelian->no_faktur,
+                    'user_id'           => Auth::id(),
+                    'notes'             => 'Penerimaan stok dari supplier',
                 ]);
             }
         });
@@ -125,7 +137,8 @@ class PembelianController extends Controller
     public function show($id)
     {
         $pembelian = Pembelian::with('supplier', 'user', 'detailPembelian.obat.satuan')->findOrFail($id);
-        return view('transaksi.pembelian.show', compact('pembelian'));
+        $apotek = \App\Models\Apotik::first();
+        return view('transaksi.pembelian.show', compact('pembelian', 'apotek'));
     }
 
     /**

@@ -10,11 +10,25 @@ class Penjualan extends Model
 
     protected $fillable = [
         'no_transaksi',
+        'pelanggan_id',
         'user_id',
-        'nama_pelanggan',
         'tanggal_penjualan',
+        'subtotal',
+        'diskon',
+        'ppn',
+        'tipe_penjualan',
+        'metode_pembayaran',
+        'dokter',
+        'no_resep',
         'total_harga',
+        'bayar',
+        'kembali',
     ];
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Customer::class, 'pelanggan_id');
+    }
 
     public function user()
     {

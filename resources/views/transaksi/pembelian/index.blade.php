@@ -5,60 +5,96 @@
 
 @section('styles')
 <style>
+    /* Header Banner Premium (Deep Emerald) - Copied from Supplier Style */
     .page-header-banner {
-        background: linear-gradient(135deg, #1e3a5f 0%, #0d9488 55%, #10b981 100%);
-        border-radius: 1.25rem; padding: 1.75rem 2rem; margin-bottom: 1.75rem;
-        position: relative; overflow: hidden;
-        display: flex; align-items: center; justify-content: space-between;
-        box-shadow: 0 10px 30px rgba(13,148,136,.25);
+        background-color: #064e4b !important;
+        background-image: linear-gradient(135deg, #064e4b, #042f2e) !important;
+        border-radius: 1.5rem;
+        padding: 2.5rem 2rem;
+        color: white;
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 20px 25px -5px rgba(6, 78, 75, 0.2);
+        position: relative;
+        overflow: hidden;
+        border: none !important;
     }
-    .page-header-banner::before { content:''; position:absolute; top:-40px; right:-40px; width:200px; height:200px; background:rgba(255,255,255,.08); border-radius:50%; }
-    .page-header-banner::after  { content:''; position:absolute; bottom:-60px; right:160px; width:150px; height:150px; background:rgba(255,255,255,.05); border-radius:50%; }
-    .page-header-left { position:relative; z-index:1; }
-    .page-header-left h2 { margin:0 0 .3rem; font-size:1.6rem; font-weight:800; color:#1a1a1a; }
-    .page-header-left p  { margin:0; font-size:.9rem; color:rgba(0,0,0,.60); }
-    .page-header-right   { position:relative; z-index:1; }
-    .btn-add-new { background:rgba(255,255,255,.18); backdrop-filter:blur(10px); border:1.5px solid rgba(255,255,255,.45); color:#fff; padding:.7rem 1.5rem; border-radius:.75rem; font-size:.9rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:.5rem; transition:all .2s; text-decoration:none; }
-    .btn-add-new:hover { background:rgba(255,255,255,.3); transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.15); }
 
-    /* MINI STATS */
+    .page-header-banner::before {
+        content: ''; position: absolute; top: -50px; right: -50px;
+        width: 250px; height: 250px; background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+
+    .page-header-banner::after {
+        content: ''; position: absolute; bottom: -70px; right: 150px;
+        width: 180px; height: 180px; background: rgba(255,255,255,0.03);
+        border-radius: 50%;
+    }
+
+    .header-content h2 { 
+        font-weight: 800; margin: 0 0 0.4rem 0 !important; letter-spacing: -0.025em; 
+        color: #ffffff !important; font-size: 1.75rem !important; display: flex; align-items: center; gap: 0.75rem; 
+        position: relative; z-index: 1;
+    }
+
+    .header-content p { 
+        color: #99f6e4 !important; font-size: 0.95rem !important; margin: 0 !important; font-weight: 500;
+        position: relative; z-index: 1;
+    }
+
+    .btn-add-new {
+        background: rgba(255,255,255,0.1) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2) !important;
+        color: #fff !important;
+        padding: 0.8rem 1.5rem !important;
+        border-radius: 0.75rem !important;
+        font-weight: 700 !important;
+        position: relative; z-index: 1;
+        transition: all 0.3s;
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        text-decoration: none;
+    }
+
+    .btn-add-new:hover { background: rgba(255,255,255,0.2) !important; transform: translateY(-2px); color: white; }
+
+    /* MINI STATS - Copied Colors from Supplier */
     .mini-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-bottom:1.75rem; }
-    .mini-stat { background:#fff; border-radius:1rem; padding:1.2rem 1.5rem; display:flex; align-items:center; gap:1rem; border:1px solid var(--border-color); box-shadow:0 2px 12px rgba(0,0,0,.04); transition:transform .2s,box-shadow .2s; }
+    .mini-stat { background:#fff; border-radius:1rem; padding:1.2rem 1.5rem; display:flex; align-items:center; gap:1rem; border:1px solid #e2e8f0; box-shadow:0 2px 12px rgba(0,0,0,.04); transition:transform .2s,box-shadow .2s; }
     .mini-stat:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.08); }
     .mini-stat-icon { width:48px; height:48px; border-radius:.85rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-    .mini-stat-icon.teal   { background:linear-gradient(135deg,#ccfbf1,#d1fae5); color:#0d9488; }
-    .mini-stat-icon.blue   { background:linear-gradient(135deg,#dbeafe,#eff6ff); color:#2563eb; }
-    .mini-stat-icon.green  { background:linear-gradient(135deg,#d1fae5,#ecfdf5); color:#059669; }
+    
+    .mini-stat-icon.amber  { background:linear-gradient(135deg,#fef3c7,#fffbeb); color:#d97706; }
+    .mini-stat-icon.red    { background:linear-gradient(135deg,#fee2e2,#fff5f5); color:#dc2626; }
+    .mini-stat-icon.pink   { background:linear-gradient(135deg,#fce7f3,#fdf2f8); color:#be185d; }
+    
     .mini-stat-lbl { font-size:.75rem; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:.05em; margin:0 0 .2rem; }
-    .mini-stat-val { font-size:1.4rem; font-weight:800; color:var(--text-color); margin:0; line-height:1.1; }
+    .mini-stat-val { font-size:1.5rem; font-weight:800; color:#1e293b; margin:0; line-height:1.1; }
 
-    /* TABLE CARD */
-    .table-card { background:#fff; border-radius:1.25rem; border:1px solid var(--border-color); box-shadow:0 4px 20px rgba(0,0,0,.04); overflow:hidden; }
-    .table-card-header { padding:1.25rem 1.75rem; border-bottom:1px solid var(--border-color); display:flex; align-items:center; gap:.75rem; background:linear-gradient(to right,#fff,#f0fdfa); }
-    .table-card-header .icon-box { width:38px; height:38px; background:linear-gradient(135deg,#ccfbf1,#d1fae5); border-radius:.65rem; display:flex; align-items:center; justify-content:center; color:#0d9488; }
-    .table-card-header h3 { margin:0; font-size:1.05rem; font-weight:700; color:var(--text-color); }
-    .table-card-body { padding:1.5rem 2rem 2rem; }
-
-    /* FAKE BADGES */
-    .faktur-chip { display:inline-block; background:#f0fdf4; border:1px solid #86efac; border-radius:.4rem; padding:.15rem .6rem; font-family:monospace; font-size:.82rem; color:#166534; font-weight:700; }
-    .supplier-chip { display:inline-flex; align-items:center; gap:.3rem; background:#eff6ff; border:1px solid #bfdbfe; border-radius:.4rem; padding:.15rem .6rem; font-size:.8rem; color:#1d4ed8; font-weight:600; }
-    .total-chip { font-weight:700; color:#0f766e; font-size:.92rem; }
-    .status-badge { display:inline-block; padding:.2rem .65rem; border-radius:999px; font-size:.75rem; font-weight:700; }
-    .status-done    { background:#d1fae5; color:#065f46; }
-    .status-pending { background:#fef3c7; color:#92400e; }
+    /* TABLE CARD - Aligned with Supplier */
+    .table-card { background:#fff; border-radius:1.25rem; border:1px solid #e2e8f0; box-shadow:0 4px 20px rgba(0,0,0,.04); overflow:hidden; }
+    .table-card-header { padding:1.25rem 1.75rem; border-bottom:1px solid #e2e8f0; display:flex; align-items:center; gap:.75rem; background:linear-gradient(to right,#fff,#fffbeb); }
+    .table-card-header .icon-box { width:38px; height:38px; background:linear-gradient(135deg,#fef3c7,#fffbeb); border-radius:.65rem; display:flex; align-items:center; justify-content:center; color:#d97706; }
+    .table-card-header h3 { margin:0; font-size:1.05rem; font-weight:700; color:#1e293b; }
+    
+    /* FAKE BADGES - Consistent with Supplier Style */
+    .faktur-chip { display:inline-block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:.4rem; padding:.15rem .6rem; font-family:monospace; font-size:.82rem; color:#475569; font-weight:700; }
+    .supplier-chip { display:inline-flex; align-items:center; gap:.3rem; background:#fff7ed; border:1px solid #fed7aa; border-radius:.4rem; padding:.15rem .6rem; font-size:.8rem; color:#c2410c; font-weight:600; }
+    .total-chip { font-weight:800; color:#b45309; font-size:.95rem; }
 
     /* ACTION BUTTONS */
-    .action-group { display:flex; gap:.4rem; justify-content:center; }
-    .btn-view { display:inline-flex; align-items:center; gap:.3rem; padding:.35rem .75rem; border-radius:.5rem; font-size:.78rem; font-weight:700; cursor:pointer; border:none; transition:all .2s; background:linear-gradient(135deg,#dbeafe,#eff6ff); color:#1d4ed8; border:1px solid #bfdbfe; text-decoration:none; }
-    .btn-view:hover { background:linear-gradient(135deg,#2563eb,#1d4ed8); color:#fff; border-color:#1d4ed8; transform:translateY(-1px); box-shadow:0 4px 10px rgba(37,99,235,.3); }
-    .btn-del  { display:inline-flex; align-items:center; gap:.3rem; padding:.35rem .75rem; border-radius:.5rem; font-size:.78rem; font-weight:700; cursor:pointer; border:none; transition:all .2s; background:linear-gradient(135deg,#fee2e2,#fecaca); color:#991b1b; border:1px solid #fca5a5; }
-    .btn-del:hover  { background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; border-color:#dc2626; transform:translateY(-1px); box-shadow:0 4px 10px rgba(239,68,68,.3); }
+    .action-group { display:flex; gap:.45rem; justify-content:center; }
+    .btn-view, .btn-del { display:inline-flex; align-items:center; gap:.3rem; padding:.38rem .8rem; border-radius:.5rem; font-size:.78rem; font-weight:700; cursor:pointer; border:none; transition:all .2s; }
+    .btn-view { background:linear-gradient(135deg,#fef3c7,#fde68a); color:#92400e; border:1px solid #fcd34d; text-decoration:none; }
+    .btn-view:hover { background:linear-gradient(135deg,#f59e0b,#d97706); color:#fff; border-color:#d97706; transform:translateY(-1px); box-shadow:0 4px 10px rgba(245,158,11,.3); }
+    .btn-del { background:linear-gradient(135deg,#fee2e2,#fecaca); color:#991b1b; border:1px solid #fca5a5; }
+    .btn-del:hover { background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; border-color:#dc2626; transform:translateY(-1px); box-shadow:0 4px 10px rgba(239,68,68,.3); }
 
     .empty-state { text-align:center; padding:4rem 2rem; color:#9ca3af; }
-    .empty-state p { margin:.5rem 0 0; font-size:.95rem; }
-    table.dataTable tbody tr:hover > td { background:#f0fdfa !important; }
-    .date-text { font-size:.85rem; color:#374151; font-weight:600; }
-    .user-text  { font-size:.82rem; color:#6b7280; }
+    table.dataTable tbody tr:hover > td { background:#fffbeb !important; }
 </style>
 @endsection
 
@@ -71,21 +107,24 @@
 @endif
 
 <div class="page-header-banner">
-    <div class="page-header-left">
-        <h2>🛒 Transaksi Pembelian</h2>
+    <div class="header-content">
+        <h2>
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            Transaksi Pembelian
+        </h2>
         <p>Kelola semua transaksi pembelian obat dari supplier dengan mudah dan cepat.</p>
     </div>
     <div class="page-header-right">
         <a href="{{ route('pembelian.create') }}" class="btn-add-new">
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
-            + Buat Pembelian
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+            Tambah Pembelian
         </a>
     </div>
 </div>
 
 <div class="mini-stats">
     <div class="mini-stat">
-        <div class="mini-stat-icon teal">
+        <div class="mini-stat-icon amber">
             <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
         </div>
         <div>
@@ -94,7 +133,7 @@
         </div>
     </div>
     <div class="mini-stat">
-        <div class="mini-stat-icon blue">
+        <div class="mini-stat-icon red">
             <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         </div>
         <div>
@@ -103,12 +142,12 @@
         </div>
     </div>
     <div class="mini-stat">
-        <div class="mini-stat-icon green">
+        <div class="mini-stat-icon pink">
             <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <div>
             <p class="mini-stat-lbl">Total Nilai</p>
-            <p class="mini-stat-val" style="font-size:1.1rem;">Rp {{ number_format($totalNilai,0,',','.') }}</p>
+            <p class="mini-stat-val" style="font-size:1.2rem;">Rp {{ number_format($totalNilai,0,',','.') }}</p>
         </div>
     </div>
 </div>
@@ -119,7 +158,7 @@
             <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
         </div>
         <h3>Daftar Transaksi Pembelian</h3>
-        <span style="margin-left:auto;background:#f0fdfa;border:1px solid #99f6e4;color:#0f766e;font-size:.78rem;font-weight:700;padding:.25rem .75rem;border-radius:999px;">{{ $totalPembelian }} Transaksi</span>
+        <span style="margin-left:auto;background:#fff7ed;border:1px solid #fed7aa;color:#c2410c;font-size:.78rem;font-weight:700;padding:.25rem .75rem;border-radius:999px;">{{ $totalPembelian }} Transaksi</span>
     </div>
     <div class="table-card-body">
         <table class="datatable" style="border:none;border-radius:0;">
@@ -147,16 +186,16 @@
                         </span>
                     </td>
                     <td>
-                        <span class="date-text">{{ \Carbon\Carbon::parse($p->tanggal_pembelian)->format('d/m/Y') }}</span>
+                        <span style="font-size:.85rem; color:#374151; font-weight:600;">{{ \Carbon\Carbon::parse($p->tanggal_pembelian)->format('d/m/Y') }}</span>
                     </td>
                     <td>
-                        <span class="user-text">{{ optional($p->user)->name ?? '—' }}</span>
+                        <span style="font-size:.82rem; color:#6b7280;">{{ optional($p->user)->name ?? '—' }}</span>
                     </td>
                     <td style="text-align:right;">
                         <span class="total-chip">Rp {{ number_format($p->total_harga,0,',','.') }}</span>
                     </td>
                     <td style="text-align:center;">
-                        <span style="background:#f0fdfa;border:1px solid #99f6e4;color:#0f766e;font-size:.78rem;font-weight:700;padding:.15rem .55rem;border-radius:999px;">
+                        <span style="background:#fff7ed;border:1px solid #fed7aa;color:#b45309;font-size:.78rem;font-weight:700;padding:.15rem .55rem;border-radius:999px;">
                             {{ $p->detailPembelian->count() }} item
                         </span>
                     </td>
@@ -182,10 +221,6 @@
                         <div class="empty-state">
                             <svg width="64" height="64" fill="none" stroke="#d1d5db" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                             <p>Belum ada transaksi pembelian.</p>
-                            <a href="{{ route('pembelian.create') }}" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;background:#0d9488;color:#fff;padding:.6rem 1.25rem;border-radius:.65rem;font-size:.88rem;font-weight:700;text-decoration:none;">
-                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
-                                Buat Pembelian Pertama
-                            </a>
                         </div>
                     </td>
                 </tr>

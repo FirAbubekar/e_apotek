@@ -8,6 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --primary-color: #0d9488;
@@ -138,6 +142,52 @@
             height: 20px;
         }
 
+        /* NOTIFICATION BADGE PREMIUM */
+        .notif-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 0.1rem 0.4rem;
+            border-radius: 99px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+        }
+
+        .notif-btn {
+            position: relative;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.6rem;
+            border-radius: 0.75rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        .notif-btn:hover { background: #f1f5f9; color: #0d9488; transform: translateY(-1px); }
+
+        /* FLEX UTILITIES */
+        .d-flex { display: flex !important; }
+        .flex-column { flex-direction: column !important; }
+        .align-items-center { align-items: center !important; }
+        .justify-content-between { justify-content: space-between !important; }
+        .gap-1 { gap: 0.25rem !important; }
+        .gap-2 { gap: 0.5rem !important; }
+        .gap-3 { gap: 1rem !important; }
+        .gap-4 { gap: 1.5rem !important; }
+        .w-100 { width: 100% !important; }
+        .h-100 { height: 100% !important; }
+        .text-center { text-align: center !important; }
+        .mb-0 { margin-bottom: 0 !important; }
+        .mt-0 { margin-top: 0 !important; }
+
         .user-profile {
             padding: 1.25rem;
             border-top: 1px solid var(--border-color);
@@ -215,9 +265,14 @@
 
         .page-title {
             margin: 0;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-color);
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #64748b;
+            background: #f8fafc;
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            border: 1px solid #e2e8f0;
+            display: inline-block;
         }
 
         .content-area {
@@ -512,9 +567,8 @@
         .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
         @media (max-width: 640px) { .grid-2-col { grid-template-columns: 1fr; gap: 0; } }
 
-        /* Common Custom Styles that can be overridden by views */
-        @yield('styles')
     </style>
+    @yield('styles')
 </head>
 <body>
 
@@ -525,8 +579,35 @@
     <main class="main-content">
         <header class="top-navbar">
             <h1 class="page-title">@yield('page_title', 'Dashboard Overview')</h1>
-            <div style="font-size: 0.875rem; color: #6b7280;">
-                {{ \Carbon\Carbon::now()->format('l, d F Y') }}
+            
+            <div class="d-flex align-items-center gap-4">
+                {{-- Notifications Alert --}}
+                @php
+                    $dashService = app(App\Services\DashboardService::class);
+                    $lowStockCount = $dashService->getLowStockMedicines()->count();
+                    $expiringCount = $dashService->getExpiringBatches()->count(); // Real app might have more count
+                    $totalNotif = $lowStockCount + $expiringCount;
+                @endphp
+                
+                <div class="d-flex gap-2">
+                    <a href="{{ route('obat-expired.index') }}" class="notif-btn" title="Obat Hampir Expired">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        @if($expiringCount > 0)
+                            <span class="notif-badge">{{ $expiringCount }}</span>
+                        @endif
+                    </a>
+
+                    <a href="{{ route('stok-obat.index') }}" class="notif-btn" title="Stok Menipis">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        @if($lowStockCount > 0)
+                            <span class="notif-badge" style="background: #f59e0b;">{{ $lowStockCount }}</span>
+                        @endif
+                    </a>
+                </div>
+
+                <div style="font-size: 0.875rem; color: #64748b; font-weight: 600; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 0.75rem;">
+                    {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
+                </div>
             </div>
         </header>
 
@@ -561,6 +642,9 @@
         });
     </script>
 
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <!-- Base Modal Scripts via Stack -->
     @stack('scripts')
 </body>
