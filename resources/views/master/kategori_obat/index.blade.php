@@ -6,54 +6,77 @@
 @section('styles')
 <style>
     /* PAGE HEADER */
+
+    /* Header Banner Premium (Deep Emerald) */
     .page-header-banner {
-        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
-        border-radius: 1.25rem;
-        padding: 1.75rem 2rem;
-        margin-bottom: 1.75rem;
+        background-color: #064e4b !important;
+        background-image: linear-gradient(135deg, #064e4b, #042f2e) !important;
+        border-radius: 1.5rem;
+        padding: 2.5rem 2rem;
+        color: white;
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 20px 25px -5px rgba(6, 78, 75, 0.2);
         position: relative;
         overflow: hidden;
+        border: none !important;
+    }
+
+    .page-header-banner::before {
+        content: ''; position: absolute; top: -50px; right: -50px;
+        width: 250px; height: 250px; background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+
+    .page-header-banner::after {
+        content: ''; position: absolute; bottom: -70px; right: 150px;
+        width: 180px; height: 180px; background: rgba(255,255,255,0.03);
+        border-radius: 50%;
+    }
+
+    .header-content h2 { 
+        font-weight: 800; 
+        margin: 0 0 0.4rem 0 !important; 
+        letter-spacing: -0.025em; 
+        color: #ffffff !important;
+        font-size: 1.75rem !important;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.25);
+        gap: 0.75rem;
+        position: relative;
+        z-index: 1;
     }
-    .page-header-banner::before {
-        content: '';
-        position: absolute;
-        top: -40px; right: -40px;
-        width: 200px; height: 200px;
-        background: rgba(255,255,255,0.08);
-        border-radius: 50%;
+
+    .header-content p { 
+        color: #99f6e4 !important; 
+        font-size: 0.95rem !important; 
+        margin: 0 !important; 
+        font-weight: 500;
+        position: relative;
+        z-index: 1;
     }
-    .page-header-banner::after {
-        content: '';
-        position: absolute;
-        bottom: -60px; right: 160px;
-        width: 150px; height: 150px;
-        background: rgba(255,255,255,0.05);
-        border-radius: 50%;
-    }
-    .page-header-left { position: relative; z-index: 1; }
-    .page-header-left h2 { margin: 0 0 0.3rem; font-size: 1.6rem; font-weight: 800; color: #1a1a1a; }
-    .page-header-left p  { margin: 0; font-size: 0.9rem; color: rgba(0,0,0,0.60); }
-    .page-header-right   { position: relative; z-index: 1; }
+
     .btn-add-new {
-        background: rgba(255,255,255,0.18);
+        background: rgba(255,255,255,0.1) !important;
         backdrop-filter: blur(10px);
-        border: 1.5px solid rgba(255,255,255,0.45);
-        color: #fff;
-        padding: 0.7rem 1.5rem;
-        border-radius: 0.75rem;
-        font-size: 0.9rem; font-weight: 700;
-        cursor: pointer;
-        display: inline-flex; align-items: center; gap: 0.5rem;
-        transition: all 0.2s;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+        color: #fff !important;
+        padding: 0.8rem 1.5rem !important;
+        border-radius: 0.75rem !important;
+        font-weight: 700 !important;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
     }
+
     .btn-add-new:hover {
-        background: rgba(255,255,255,0.30);
+        background: rgba(255,255,255,0.2) !important;
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
     /* MINI STATS */
@@ -135,16 +158,16 @@
 
 {{-- PAGE HEADER --}}
 <div class="page-header-banner">
-    <div class="page-header-left">
+    <div class="header-content">
         <h2>
-            <svg style="display:inline-block;vertical-align:-4px;margin-right:0.5rem" width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
             Manajemen Kategori Obat
         </h2>
         <p>Kelola dan klasifikasikan kategori obat yang tersedia di apotek Anda.</p>
     </div>
     <div class="page-header-right">
-        <button type="button" class="btn-add-new" onclick="openModal('addModal')">
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+        <button type="button" class="btn btn-add-new" onclick="openModal('addModal')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
             Tambah Kategori
         </button>
     </div>

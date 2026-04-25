@@ -37,8 +37,8 @@ class Obat extends Model
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
 
-    public function stok()
+    public function medicineStocks()
     {
-        return $this->hasOne(StokObat::class, 'obat_id');
+        return $this->hasMany(MedicineStock::class, 'medicine_id');
     }
 }

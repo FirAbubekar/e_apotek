@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -10,13 +11,15 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return view('master.user.index', compact('users'));
+        $users = User::with('role')->get();
+        $roles = Role::all();
+        return view('pengaturan.users.index', compact('users', 'roles'));
     }
 
     public function create()
     {
-        return view('master.user.create');
+        $roles = Role::all();
+        return view('pengaturan.users.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -24,15 +27,18 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|unique:users,username|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|string|min:6',
+            'role_id' => 'required|exists:roles,id',
         ]);
 
         User::create([
             'name' => $request->name,
             'username' => $request->username,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => 1, // Default to admin for now
-            'is_active' => 1, // Default to active
+            'role_id' => $request->role_id,
+            'is_active' => $request->has('is_active') ? 1 : 0,
         ]);
 
         return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan');
@@ -45,7 +51,8 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('master.user.edit', compact('user'));
+        $roles = Role::all();
+        return view('pengaturan.users.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, User $user)
@@ -53,9 +60,10 @@ class UserController extends Controller
         $rules = [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'role_id' => 'required|exists:roles,id',
         ];
 
-        // Only validate password if the user intends to change it
         if ($request->filled('password')) {
             $rules['password'] = 'required|string|min:6';
         }
@@ -64,6 +72,10 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->username = $request->username;
+        $user->email = $request->email;
+        $user->role_id = $request->role_id;
+        $user->is_active = $request->has('is_active') ? 1 : 0;
+
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
